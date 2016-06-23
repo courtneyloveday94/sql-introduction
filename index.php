@@ -1,10 +1,15 @@
 <?php
 
-include "database.php";
+include "Model/Database.php";
+include "Model/Movie.php";
 // include "db_pdo.php";
-$movies = getMovieList();
-$singlemovie = getSingleMovie();
+// $movies = getMovieList();
+// $singlemovie = getSingleMovie();
 
+//instantiate an object for Movie
+$movie = new Movie;
+$movies = $movie->SelectAll();
+$singlemovie = $movie->find();
 
 //ternary if operator to get page information
 
@@ -35,7 +40,7 @@ switch ($page) {
  	default:
  		echo "Error 404! Page not found.";
  		break;
- } 
+ }
 
 
 

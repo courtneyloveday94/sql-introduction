@@ -1,23 +1,23 @@
 <?php
-$genres = genreList();
+// $genres = genreList();
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8"> 
+    <meta charset="utf-8">
     <title>Introduction to MySQL</title>
     <link rel="stylesheet" type="text/css" href="">
   </head>
   <body>
-  	
-  	
+
+
   	<h1><?=$singlemovie['title']?></h1>
   	<p>Release Year - <?=$singlemovie['release_date']?></p>
   	<p><?=$singlemovie['description']?></p>
     <p><?=$singlemovie['duration']?></p>
-    <?php 
+    <?php
     foreach ($genres as $genre) {
       echo "<strong><span>". $genre['genres'] ."&nbsp;</span></strong>";
     }
@@ -27,7 +27,7 @@ $genres = genreList();
     <!--When this link is clicked, link goes to index page with page= -->
     <!--switches to case with  -->
   	<a href="./?page=movieForm&amp;id=<?=$singlemovie['id']?>">Edit Movie</a>
-  	
+
     <!--When this link is clicked, link goes to index page with page=delete -->
     <!--switches to case with delete -->
   	<a href="./?page=delete&amp;id=<?=$singlemovie['id']?>">Delete Movie</a>

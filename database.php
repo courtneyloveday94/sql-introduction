@@ -1,6 +1,6 @@
 <?php
 
-$dbc = new mysqli('localhost', 'root','','sindhu_db');
+$dbc = new mysqli('localhost', 'root','','sql_intro');
 
 function getMovieList() {
 
@@ -15,7 +15,7 @@ function getMovieList() {
 	while($allMovies = $result->fetch_assoc()){
 		$movieArray[]= $allMovies;
 	}
-	
+
 	return $movieArray;
 
 }
@@ -41,7 +41,7 @@ function deleteMovie() {
 	global $dbc;
 	if(isset($_GET['id'])){
 		$id = $_GET['id'];
-	} 
+	}
 
 	$sql = "DELETE FROM movies WHERE id = '$id'";
 
@@ -51,7 +51,7 @@ function deleteMovie() {
 function editMovie() {
 
 	global $dbc;
-	
+
 	//obtain all information from $_POST
 	$id = $_POST['id'];
 	$title=$_POST['title'];
@@ -76,7 +76,7 @@ function addMovie() {
 	$duration=$_POST['duration'];
 	$date=$_POST['release_date'];
 
-	$sql = "INSERT INTO movies(title, description, rating, duration, release_date) 
+	$sql = "INSERT INTO movies(title, description, rating, duration, release_date)
 			VALUES ('$title','$description','$rating','$duration','$date')";
 
 	$dbc->query($sql);
