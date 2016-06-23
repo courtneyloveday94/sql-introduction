@@ -1,8 +1,8 @@
 <?php
 
-class Database {
+abstract class Database {
   public $dbc;
-  public function getDatabaseConnection() {
+  protected static function getDatabaseConnection() {
     $dsn = "mysql:host=localhost;dbname=sql_intro;charset=utf8";
     $dbc = new PDO($dsn, 'root', '');
     $dbc->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -10,8 +10,8 @@ class Database {
     return $dbc;
   }
   public function SelectAll() {
-    $dbc = $this-> getDatabaseConnection();
-    $sql = "SELECT " . implode(",", $this->columns) . " FROM " . $this->tablename;
+    $dbc = static::getDatabaseConnection();
+    $sql = "SELECT " . implode(",", static::$columns) . " FROM " . static::$tablename;
     $statement = $dbc->prepare($sql);
     $statement->execute();
     $Array = [];
@@ -21,13 +21,22 @@ class Database {
   	return $Array;
   }
   public function find() {
-    $dbc = $this->getDatabaseConnection();
+    $dbc = static::getDatabaseConnection();
     $id = isset($_GET['id']) ? $_GET['id'] : null;
-    $sql = "SELECT " . implode(",", $this->columns) . " FROM " . $this->tablename . " WHERE id=id";
+    $sql = "SELECT " . implode(",", static::$columns) . " FROM " . static::$tablename . " WHERE id=id";
     $statement = $dbc->prepare($sql);
     $statement->bindValue(":id", $id);
     $statement->execute();
     $singlerecord = $statement->fetch(PDO::FETCH_ASSOC);
     return $singlerecord;
+  }
+  public function deleteMovie(){
+    $dbc = static::getDatabaseConnection();
+    $id = isset($_GET['id']) ? $_GET['id'] : null;
+    $sql = "DELETE FROM " . static::$tablename . " WHERE id = :id";
+    $statement = $dbc->prepare($sql);
+    $statement->bindValue(":id", $id);
+    $statement->execute();
+    header("Location:./");
   }
 }
